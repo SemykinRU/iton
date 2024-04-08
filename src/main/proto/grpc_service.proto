@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "ru.iton.test.grpc";
+option java_outer_classname = "GrpcServiceProto";
+option java_generic_services=true;
+
+service NumberService {
+  rpc getValue(NumberRequest) returns (stream NumberResponse) {}
+}
+
+message NumberResponse {
+  int32 value = 1;
+}
+
+message NumberRequest {
+  int32 first_value = 1;
+  int32 last_value = 2;
+}

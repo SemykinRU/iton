@@ -30,15 +30,19 @@ public class Main {
             .setFirstValue(0)
             .setLastValue(LAST_VALUE)
             .build());
+        int valueFromServer;
         for (int i = 0; i < BATCH_SIZE; i++) {
-            TimeUnit.SECONDS.sleep(ONE_SECOND_SLEEP);
-            log.info("currentValue:" + (++currentValue));
             if (value.hasNext()) {
-                final int valueFromServer = value.next().getValue();
+                log.info("currentValue:" + (++currentValue));
+                valueFromServer = value.next().getValue();
                 log.info("new value: " + valueFromServer);
-                log.info("currentValue:" + (currentValue += valueFromServer + 1));
+
             } else {
                 break;
+            }
+            TimeUnit.SECONDS.sleep(ONE_SECOND_SLEEP);
+            if (value.hasNext()) {
+                log.info("currentValue:" + (currentValue += valueFromServer + 1));
             }
         }
         log.info("request completed");
